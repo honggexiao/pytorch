@@ -25,6 +25,21 @@ IF "%~1"=="--with-cuda" (
   set /a NO_CUDA=1
 )
 
+IF "%CMAKE_GENERATOR%"=="" (
+  set CMAKE_GENERATOR_COMMAND=
+  set MAKE_COMMAND=msbuild INSTALL.vcxproj /p:Configuration=Release
+) ELSE (
+  set CMAKE_GENERATOR_COMMAND=-G "%CMAKE_GENERATOR%"
+  IF "%CMAKE_GENERATOR%"=="Ninja" (
+    IF "%CC%"== "" set CC=cl.exe
+    IF "%CXX%"== "" set CXX=cl.exe
+    set MAKE_COMMAND=cmake --build . --target install --config Release -- -j%NUMBER_OF_PROCESSORS% || exit /b 1
+  ) ELSE (
+    set MAKE_COMMAND=msbuild INSTALL.vcxproj /p:Configuration=Release
+  )
+)
+
+
 :read_loop
 if "%1"=="" goto after_loop
 call:build %~1

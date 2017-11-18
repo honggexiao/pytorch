@@ -53,8 +53,8 @@ IF EXIST ".\tmp_install\bin" (
   copy /Y tmp_install\bin\* .
 )
 xcopy /Y /E tmp_install\include\*.* include\*.*
-xcopy /Y ..\..\aten\src\THNN\generic\THNN.h  .
-xcopy /Y ..\..\aten\src\THCUNN\generic\THCUNN.h .
+xcopy /Y tmp_install\include\THNN\generic\THNN.h  .
+xcopy /Y tmp_install\include\THCUNN\generic\THCUNN.h .
 
 goto:eof
 

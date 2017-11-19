@@ -61,7 +61,7 @@ goto:eof
 :build
   mkdir build\%~1
   cd build/%~1
-  cmake ../../%~1 -G "Visual Studio 14 2015 Win64" ^
+  cmake ../../%~1 %CMAKE_GENERATOR_COMMAND% ^
                   -DCMAKE_MODULE_PATH=%BASE_DIR%/cmake/FindCUDA ^
                   -DTorch_FOUND="1" ^
                   -DCMAKE_INSTALL_PREFIX="%INSTALL_DIR%" ^
@@ -87,7 +87,7 @@ goto:eof
                   -Dnanopb_BUILD_GENERATOR=0 ^
                   -DCMAKE_BUILD_TYPE=Release
 
-  msbuild INSTALL.vcxproj /p:Configuration=Release
+  %MAKE_COMMAND%
   cd ../..
 
 goto:eof

@@ -108,6 +108,7 @@ function build() {
   if [[ $(uname) == 'Darwin' ]]; then
     cd tmp_install/lib
     for lib in *.dylib; do
+      [ -f "$lib" ] || break
       echo "Updating install_name for $lib"
       install_name_tool -id @rpath/$lib $lib
     done

@@ -487,7 +487,7 @@ static void THRefcountedMapAllocator_free(void* ctx_, void* data) {
   if (THAtomicDecrementRef(&info->refcount)) {
     CloseHandle(ctx->handle);
   }
-  if(UnmapViewOfFile(data) == 0)
+  if(UnmapViewOfFile(((char*)data) - TH_ALLOC_ALIGNMENT) == 0)
     THError("could not unmap the shared memory file");
 #else /* _WIN32 */
 
